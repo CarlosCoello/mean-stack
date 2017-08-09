@@ -1,0 +1,55 @@
+<nav class="navbar navbar-inverse">
+     <div class="container">
+       <div class="navbar-header">
+         <a class="navbar-brand" href="#">Create Your Todo</a>
+       </div>
+     </div>
+   </nav>
+
+<br />
+<div class="container">
+<header class="jumbotron">
+  <h1>TODO</h1>
+  <p class="lead">Create your todo's!</p>
+</header>
+</div>
+
+<div class="container">
+
+<div *ngIf="!editInProcess">
+  <button type="button" name="button" class="btn btn-info" *ngIf="!processing" (click)="showForm()">Create a TODO</button>
+
+<form [formGroup]="form" (submit)="submitForm()" *ngIf="processing">
+  <div class="form-group">
+    <label>Todo</label>
+    <input type="text" name="todo" class="form-control" placeholder="Type a todo" formControlName="todo">
+  </div>
+  <button type="submit" class="btn btn-primary">Add TODO</button>
+  <button type="button" class="btn btn-danger" (click)="goBack()">Cancel</button>
+</form>
+</div>
+
+<form (submit)="updateTodo(edit)" *ngIf="editInProcess">
+<div class="form-group">
+  <label>Todo</label>
+  <input type="text" name="edit" class="form-control" [(ngModel)]="edit.todo">
+</div>
+<button type="submit" class="btn btn-primary">Update Todo</button>
+<button type="button" class="btn btn-danger" (click)="goBack()">Cancel</button>
+</form>
+
+<br />
+<br />
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let todo of todos">
+  <strong>Todo:</strong> {{ todo.todo }} <strong>Date created:</strong> {{ todo.dateCreated | date:'MMM dd, yyyy'}}
+  <button type="button" name="button" class="btn btn-default" (click)="editTodo(todo)">Edit Todo</button>
+  <button type="button" name="button" class="btn btn-danger" (click)="deleteTodo(todo._id)">Delete</button>
+  </li>
+</ul>
+
+</div>
+
+<br />
+<br />
